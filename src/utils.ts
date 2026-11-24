@@ -4,9 +4,11 @@ export const DATA_BASE_URL =
   typeof window !== 'undefined' &&
   (window.location.protocol === 'file:' ||
     window.location.protocol === 'blob:' ||
+    window.location.protocol === 'data:' ||
     window.location.hostname.includes('htmlpreview') ||
     window.location.hostname.includes('githack') ||
-    window.location.hostname.includes('jsdelivr'))
+    window.location.hostname.includes('jsdelivr') ||
+    window.location.hostname.includes('github.io'))
     ? 'https://raw.githubusercontent.com/yashasvamoond-commits/client-manager/arena/df2a2b26-client-manager/public/data'
     : './data';
 

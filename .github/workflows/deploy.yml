@@ -52,23 +52,24 @@ jobs:
       - name: Publish Permanent GitHub Release with Direct Download Links
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.0
+          tag_name: v1.0.1
           target_commitish: ${{ github.sha }}
-          name: "NyayaDesk v1.0 — Direct Download for Android & iOS"
+          name: "NyayaDesk v1.0.1 — Direct Install for iPhone (iOS) & Android"
           body: |
-            ## ⚖️ NyayaDesk — Direct Download for Non-Technical Users
+            ## ⚖️ NyayaDesk — Direct Install for iPhone (iOS) & Android
 
-            ### 📱 Android Phone / Tablet (Direct 1-Tap App Installer)
-            👉 **[Tap Here to Download NyayaDesk-Android.apk](https://github.com/${{ github.repository }}/releases/download/v1.0.0/NyayaDesk-Android.apk)**
-            1. Tap the blue link above on your Android phone.
-            2. Once downloaded, tap **Open** → **Install** (if prompted by Chrome, tap *Allow from this source*).
-            3. Open **NyayaDesk** from your home screen — works **100% offline** with all 12,238 Bare Act sections & IPC/BNS/CrPC/BNSS/IEA/BSA converter!
+            ### 🍏 iPhone / iPad (iOS Safari — 1-Tap Open & Add to Home Screen)
+            👉 **[Tap Here to Open NyayaDesk on iPhone / iPad](https://raw.githack.com/${{ github.repository }}/arena/df2a2b26-client-manager/NyayaDesk-Standalone.html)**
+            1. Tap the link above in **Safari** on your iPhone.
+            2. Tap the **Share icon (`↑`)** at the bottom of Safari → scroll down and tap **"Add to Home Screen"** → tap **"Add"**.
 
             ---
 
-            ### 🍏 iPhone / iPad (iOS) & Desktop
-            👉 **[Tap Here to Download NyayaDesk-Standalone.html](https://github.com/${{ github.repository }}/releases/download/v1.0.0/NyayaDesk-Standalone.html)**
-            *(Or open directly via the live web installer link to Add to Home Screen on iOS Safari!)*
+            ### 📱 Android Phone / Tablet (Direct 1-Tap Native App `.apk`)
+            👉 **[Tap Here to Download NyayaDesk-Android.apk](https://github.com/${{ github.repository }}/releases/download/v1.0.1/NyayaDesk-Android.apk)**
+            1. Tap the link above on your Android phone.
+            2. Once downloaded, tap **Open** → **Install** (if prompted, tap *Allow from this source*).
+            3. Open **NyayaDesk** from your home screen — works **100% offline** with all 12,238 Bare Act sections & IPC/BNS/CrPC/BNSS/IEA/BSA converter!
           draft: false
           prerelease: false
           files: |
