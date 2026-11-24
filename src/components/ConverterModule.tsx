@@ -10,7 +10,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { ConcordanceRow } from '../types';
-import { printLegalDocument } from '../utils';
+import { DATA_BASE_URL, printLegalDocument } from '../utils';
 
 type ConcordanceKey =
   | 'ipc_to_bns'
@@ -88,7 +88,7 @@ export const ConverterModule: React.FC<ConverterModuleProps> = ({ onOpenSectionI
 
   useEffect(() => {
     let mounted = true;
-    fetch('./data/concordance.json')
+    fetch(`${DATA_BASE_URL}/concordance.json`)
       .then((r) => r.json())
       .then((json) => {
         if (mounted) {

@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { ActMeta, BareActSection, CentralStatuteRegistryItem } from '../types';
 import { buildDynamicSectionInsight } from '../data';
+import { DATA_BASE_URL } from '../utils';
 
 interface LawCorpusModuleProps {
   externalTarget?: { actCode: string; sectionNum?: string; query?: string } | null;
@@ -131,9 +132,9 @@ export const LawCorpusModule: React.FC<LawCorpusModuleProps> = ({
   useEffect(() => {
     let mounted = true;
     Promise.all([
-      fetch('./data/acts_manifest.json').then((r) => r.json()),
-      fetch('./data/search_index.json').then((r) => r.json()),
-      fetch('./data/sc_judgments.json').then((r) => r.json())
+      fetch(`${DATA_BASE_URL}/acts_manifest.json`).then((r) => r.json()),
+      fetch(`${DATA_BASE_URL}/search_index.json`).then((r) => r.json()),
+      fetch(`${DATA_BASE_URL}/sc_judgments.json`).then((r) => r.json())
     ])
       .then(([manifest, sIdx, judgments]) => {
         if (!mounted) return;

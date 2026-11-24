@@ -1,5 +1,15 @@
 import { AdvocateProfile, ClientMatter } from './types';
 
+export const DATA_BASE_URL =
+  typeof window !== 'undefined' &&
+  (window.location.protocol === 'file:' ||
+    window.location.protocol === 'blob:' ||
+    window.location.hostname.includes('htmlpreview') ||
+    window.location.hostname.includes('githack') ||
+    window.location.hostname.includes('jsdelivr'))
+    ? 'https://raw.githubusercontent.com/yashasvamoond-commits/client-manager/arena/df2a2b26-client-manager/public/data'
+    : './data';
+
 /**
  * Formats a number in the Indian numbering system (₹1,50,000)
  */

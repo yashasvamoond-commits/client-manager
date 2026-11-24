@@ -1,4 +1,4 @@
-name: Deploy NyayaDesk App & Build Android APK
+name: Build NyayaDesk Android APK & Universal Installer Release
 
 on:
   push:
@@ -6,29 +6,73 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 jobs:
-  build-web-pwa:
+  build-and-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 22
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
-      - name: Install dependencies & build offline-first app
+      - name: Setup Java 21 (for Android APK build)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies & build NyayaDesk web bundle
         run: |
           npm ci
           npm run build
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Generate Native Android Project & Build Installable APK
+        run: |
+          npx cap add android
+          npx cap sync android
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+          cp app/build/outputs/apk/debug/app-debug.apk ../NyayaDesk-Android.apk
+
+      - name: Create Universal Download Page & ZIP Bundle
+        run: |
+          cd dist && zip -qr ../NyayaDesk-Universal-Offline-App.zip . && cd ..
+
+      - name: Publish Permanent GitHub Release with Direct Download Links
+        uses: softprops/action-gh-release@v2
         with:
-          path: ./dist
+          tag_name: v1.0.0
+          target_commitish: ${{ github.sha }}
+          name: "NyayaDesk v1.0 — Direct Download for Android & iOS"
+          body: |
+            ## ⚖️ NyayaDesk — Direct Download for Non-Technical Users
+
+            ### 📱 Android Phone / Tablet (Direct 1-Tap App Installer)
+            👉 **[Tap Here to Download NyayaDesk-Android.apk](https://github.com/${{ github.repository }}/releases/download/v1.0.0/NyayaDesk-Android.apk)**
+            1. Tap the blue link above on your Android phone.
+            2. Once downloaded, tap **Open** → **Install** (if prompted by Chrome, tap *Allow from this source*).
+            3. Open **NyayaDesk** from your home screen — works **100% offline** with all 12,238 Bare Act sections & IPC/BNS/CrPC/BNSS/IEA/BSA converter!
+
+            ---
+
+            ### 🍏 iPhone / iPad (iOS) & Desktop
+            👉 **[Tap Here to Open / Save NyayaDesk-Standalone.html](https://github.com/${{ github.repository }}/releases/download/v1.0.0/NyayaDesk-Standalone.html)**
+            *(Or open directly in Safari on iPhone/iPad via the live web link and tap **Share → Add to Home Screen**.)*
+          draft: false
+          prerelease: false
+          files: |
+            NyayaDesk-Android.apk
+            NyayaDesk-Standalone.html
+            NyayaDesk-Universal-Offline-App.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
