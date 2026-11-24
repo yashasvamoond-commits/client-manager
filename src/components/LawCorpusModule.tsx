@@ -65,9 +65,11 @@ const ACT_ALIASES: Record<string, string> = {
   ndps: 'NDPS',
   pocso: 'POCSO',
   rera: 'RERA',
-  companies: 'COMPANIES',
-  it: 'IT',
-  dpdp: 'DPDP',
+  companies: 'CA',
+  ca: 'CA',
+  it: 'IT_ACT',
+  dpdp: 'DPDPA',
+  dpdpa: 'DPDPA',
   limitation: 'LA',
   tpa: 'TPA',
   sra: 'SRA',
@@ -80,8 +82,8 @@ const ACT_ALIASES: Record<string, string> = {
   sarfaesi: 'SARFAESI',
   cpa: 'CPA',
   consumer: 'CPA',
-  dv: 'PWDVA',
-  pwdva: 'PWDVA',
+  dv: 'DV',
+  pwdva: 'DV',
   posh: 'POSH'
 };
 
